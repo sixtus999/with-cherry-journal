@@ -1,0 +1,730 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>With Cherry — the diary two people write together</title>
+    <meta name="description" content="A shared diary for couples with handwritten pages, photos and a soundtrack, in a book you can turn.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Caveat:wght@500;700&family=Figtree:wght@400;500;600&display=swap">
+    <style>
+        :root {
+            --bg: #ece8f1;
+            --ink: #2a2850;
+            --mute: #5d5b7d;
+            --rose: #bf3f69;
+            --paper: #fbf8f2;
+            --card: #f6f3fa;
+            --line: #d5cfe0;
+            --onrose: #fff;
+            --serif: "Fraunces",Georgia,serif;
+            --hand: "Caveat","Segoe Script",cursive;
+            --sans: "Figtree",system-ui,sans-serif;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top,0px);
+            padding-bottom: env(safe-area-inset-bottom,0px)
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #16152b;
+                --ink: #ece9f7;
+                --mute: #a9a6c8;
+                --rose: #e86a91;
+                --card: #201f3a;
+                --line: #37355c;
+                --onrose: #1a1020
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #16152b;
+            --ink: #ece9f7;
+            --mute: #a9a6c8;
+            --rose: #e86a91;
+            --card: #201f3a;
+            --line: #37355c;
+            --onrose: #1a1020
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: env(safe-area-inset-top,0px)
+        }
+
+        *, *::before, *::after {
+            box-sizing: inherit
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 400 17px/1.6 var(--sans)
+        }
+
+        a {
+            color: inherit
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--rose);
+            outline-offset: 3px;
+            border-radius: 4px
+        }
+
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 22px
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .logo {
+            font: 700 22px var(--serif);
+            text-decoration: none
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-size: 15px
+        }
+
+            nav a {
+                text-decoration: none;
+                color: var(--mute)
+            }
+
+                nav a:hover {
+                    color: var(--ink)
+                }
+
+        .btn {
+            display: inline-block;
+            background: var(--rose);
+            color: var(--onrose);
+            border: 0;
+            border-radius: 999px;
+            padding: 12px 26px;
+            font: 600 16px var(--sans);
+            text-decoration: none;
+            cursor: pointer
+        }
+
+            .btn.ghost {
+                background: none;
+                color: var(--ink);
+                border: 1.5px solid var(--line)
+            }
+
+        nav .btn {
+            padding: 8px 18px;
+            font-size: 14px;
+            color: var(--onrose)
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 40px;
+            align-items: center;
+            padding: 48px 0 72px
+        }
+
+        h1 {
+            font: 700 clamp(38px,6vw,68px)/1.02 var(--serif);
+            margin: 0 0 20px;
+            letter-spacing: -.02em
+        }
+
+            h1 em {
+                font-weight: 500
+            }
+
+        .hero p {
+            color: var(--mute);
+            max-width: 46ch;
+            margin: 0 0 28px
+        }
+
+        .cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .note {
+            background: var(--paper);
+            color: #2a2850;
+            border-radius: 6px;
+            padding: 26px 28px 30px;
+            transform: rotate(2deg);
+            box-shadow: 0 18px 40px -18px rgba(42,40,80,.5);
+            font: 500 25px/1.35 var(--hand);
+            position: relative
+        }
+
+            .note small {
+                display: block;
+                font: 500 13px var(--sans);
+                color: #6b6987;
+                margin-bottom: 8px
+            }
+
+            .note::after {
+                content: "";
+                position: absolute;
+                inset: 8px;
+                border: 1px dashed #d9d2e6;
+                border-radius: 3px;
+                pointer-events: none
+            }
+
+        .sig {
+            display: block;
+            margin-top: 10px;
+            color: #bf3f69;
+            font-weight: 700
+        }
+
+        section {
+            padding: 64px 0
+        }
+
+        h2 {
+            font: 700 clamp(28px,4vw,42px)/1.1 var(--serif);
+            margin: 0 0 12px;
+            letter-spacing: -.01em
+        }
+
+        .lead {
+            color: var(--mute);
+            margin: 0 0 36px;
+            max-width: 52ch
+        }
+        /* book */
+        .stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            perspective: 1800px
+        }
+
+        .book {
+            --pw: clamp(150px,36vw,320px);
+            width: var(--pw);
+            height: calc(var(--pw)*1.38);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform .8s cubic-bezier(.5,.1,.2,1);
+            margin-left: var(--pw)
+        }
+
+            .book.closed {
+                transform: translateX(calc(var(--pw)/-2))
+            }
+
+            .book.ended {
+                transform: translateX(calc(var(--pw)/2))
+            }
+
+        .leaf {
+            position: absolute;
+            inset: 0;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform .9s cubic-bezier(.5,.1,.2,1)
+        }
+
+            .leaf.flip {
+                transform: rotateY(-180deg)
+            }
+
+        .face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            overflow: hidden;
+            background: var(--paper);
+            color: #2a2850;
+            padding: 7% 8%;
+            font-family: var(--hand);
+            font-size: clamp(11px,1.9vw,17px);
+            line-height: 1.3;
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .front {
+            border-radius: 2px 8px 8px 2px;
+            box-shadow: inset 8px 0 14px -10px rgba(0,0,0,.35)
+        }
+
+        .back {
+            transform: rotateY(180deg);
+            border-radius: 8px 2px 2px 8px;
+            box-shadow: inset -8px 0 14px -10px rgba(0,0,0,.35)
+        }
+
+        .face h3 {
+            font: 700 clamp(15px,2.6vw,23px)/1.1 var(--serif);
+            margin: 0
+        }
+
+        .face time {
+            font: 500 clamp(9px,1.4vw,12px) var(--sans);
+            color: #6b6987
+        }
+
+        .face p {
+            margin: 0
+        }
+
+        .pg {
+            margin-top: auto;
+            font: 500 11px var(--sans);
+            color: #8b88a6;
+            text-align: center
+        }
+
+        .cover {
+            background: linear-gradient(135deg,#3a2f6b,#6a2f58);
+            color: #f6e9ef;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 10px;
+            border: 3px double rgba(255,255,255,.35);
+            outline: 6px solid #3a2f6b;
+            outline-offset: -12px
+        }
+
+            .cover h3 {
+                color: #fff;
+                font-size: clamp(20px,4vw,34px)
+            }
+
+        .photo {
+            flex: 1;
+            border-radius: 4px;
+            min-height: 0;
+            position: relative;
+            box-shadow: 0 0 0 5px #fff,0 3px 10px 4px rgba(0,0,0,.18)
+        }
+
+        .ctrl {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+            .ctrl button {
+                min-width: 44px;
+                min-height: 44px
+            }
+
+            .ctrl span {
+                color: var(--mute);
+                font-size: 15px;
+                min-width: 9ch;
+                text-align: center
+            }
+        /* features */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+            gap: 34px 40px
+        }
+
+            .grid h3 {
+                font: 700 20px var(--serif);
+                margin: 0 0 6px
+            }
+
+            .grid p {
+                margin: 0;
+                color: var(--mute);
+                font-size: 16px
+            }
+
+            .grid > div {
+                border-top: 2px solid var(--line);
+                padding-top: 14px
+            }
+        /* demo */
+        .demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 28px
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin: 0 0 6px
+        }
+
+        textarea, select {
+            width: 100%;
+            font: inherit;
+            color: var(--ink);
+            background: var(--bg);
+            border: 1.5px solid var(--line);
+            border-radius: 10px;
+            padding: 10px 12px
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            margin-top: 14px;
+            flex-wrap: wrap
+        }
+
+            .row > div {
+                flex: 1;
+                min-width: 130px
+            }
+
+        .swatches {
+            display: flex;
+            gap: 8px
+        }
+
+            .swatches button {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border: 2px solid var(--line);
+                cursor: pointer
+            }
+
+                .swatches button[aria-pressed=true] {
+                    outline: 3px solid var(--rose);
+                    outline-offset: 2px
+                }
+
+        .preview {
+            background: var(--paper);
+            border-radius: 6px;
+            padding: 22px;
+            box-shadow: 0 14px 30px -16px rgba(42,40,80,.45);
+            color: #2a2850;
+            min-height: 220px;
+            font-size: 26px;
+            line-height: 1.35;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere
+        }
+        /* steps */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+            gap: 28px;
+            counter-reset: s;
+            padding: 0;
+            list-style: none
+        }
+
+            .steps li {
+                counter-increment: s
+            }
+
+                .steps li::before {
+                    content: counter(s);
+                    display: grid;
+                    place-items: center;
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    background: var(--rose);
+                    color: var(--onrose);
+                    font: 700 20px var(--serif);
+                    margin-bottom: 12px
+                }
+
+            .steps h3 {
+                margin: 0 0 4px;
+                font: 700 20px var(--serif)
+            }
+
+            .steps p {
+                margin: 0;
+                color: var(--mute)
+            }
+
+        blockquote {
+            margin: 0 0 26px;
+            padding-left: 18px;
+            border-left: 3px solid var(--rose);
+            font: 500 italic 21px/1.45 var(--serif);
+            max-width: 60ch
+        }
+
+            blockquote cite {
+                display: block;
+                font: 500 14px var(--sans);
+                color: var(--mute);
+                margin-top: 6px
+            }
+        /* faq */
+        details {
+            border-bottom: 1px solid var(--line);
+            padding: 16px 0;
+            max-width: 720px
+        }
+
+        summary {
+            font: 700 19px var(--serif);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px
+        }
+
+            summary::after {
+                content: "+";
+                color: var(--rose);
+                font-size: 24px;
+                line-height: 1
+            }
+
+        details[open] summary::after {
+            content: "–"
+        }
+
+        details p {
+            color: var(--mute);
+            margin: 10px 0 0
+        }
+
+        .end {
+            text-align: center;
+            padding: 80px 0
+        }
+
+        footer {
+            padding: 28px 0 40px;
+            color: var(--mute);
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: calc(20px + env(safe-area-inset-bottom,0px));
+            transform: translate(-50%,40px);
+            background: var(--ink);
+            color: var(--bg);
+            padding: 10px 18px;
+            border-radius: 999px;
+            opacity: 0;
+            transition: .3s;
+            pointer-events: none;
+            font-size: 14px
+        }
+
+            .toast.on {
+                opacity: 1;
+                transform: translate(-50%,0)
+            }
+
+        @media(max-width:780px) {
+            .hero, .demo {
+                grid-template-columns: 1fr
+            }
+
+            .hero {
+                padding-top: 20px
+            }
+
+            .note {
+                transform: none
+            }
+
+            nav a:not(.btn) {
+                display: none
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                transition-duration: .01s !important;
+                scroll-behavior: auto !important
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <a class="logo" href="#">With Cherry</a>
+            <nav><a href="#features">Features</a><a href="#try">Try it</a><a href="#faq">FAQ</a><button class="btn ghost" id="theme" style="padding:8px 14px;font-size:14px" aria-label="Toggle dark mode">Dark</button><a class="btn" href="#end">Start free</a></nav>
+        </header>
+
+        <div class="hero">
+            <div>
+                <h1>The diary you write <em>together.</em></h1>
+                <p>With Cherry is a shared diary for two. Write by hand-style pages, add photos and a song, then turn the pages of a real-feeling book. Private until you decide otherwise.</p>
+                <div class="cta"><a class="btn" href="#end">Create your diary</a><a class="btn ghost" href="#book">Turn the pages</a></div>
+            </div>
+            <div class="note"><small>14 February</small>Today you reached for my hand without looking, and I knew I'd follow you anywhere. Here's to a thousand more pages.<span class="sig">always, me</span></div>
+        </div>
+
+        <section id="book" style="padding-top:0">
+            <h2>Take the sample book for a spin</h2>
+            <p class="lead">Click the book, use the arrow buttons, or press the left and right arrow keys.</p>
+            <div class="stage">
+                <div class="book closed" id="bk" tabindex="0" aria-label="Sample diary. Use arrow keys to turn pages."></div>
+                <div class="ctrl">
+                    <button class="btn ghost" id="prev" aria-label="Previous page">‹</button>
+                    <span id="pos" aria-live="polite">Cover</span>
+                    <button class="btn ghost" id="next" aria-label="Next page">›</button>
+                    <button class="btn ghost" id="snd" aria-pressed="false">Play our song</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>More than a journal</h2>
+            <p class="lead">Every detail is meant to feel like a keepsake, not an app.</p>
+            <div class="grid">
+                <div><h3>Handwritten pages</h3><p>Pick a handwriting font and an ink color. Sign each entry. Long stories flow across pages.</p></div>
+                <div><h3>Photos, restyled</h3><p>Add your favorite photos and turn them into watercolor or storybook art.</p></div>
+                <div><h3>A soundtrack</h3><p>Add the songs that matter. They play softly while you read.</p></div>
+                <div><h3>Invite your partner</h3><p>Share a one-time link. You two write together; everyone else can only read.</p></div>
+                <div><h3>Print or save as PDF</h3><p>Export the whole diary to print, frame a page, or keep forever.</p></div>
+                <div><h3>Works anywhere</h3><p>Phone, tablet or computer, in any browser. Nothing to install.</p></div>
+            </div>
+        </section>
+
+        <section id="try">
+            <h2>Write a line, see how it looks</h2>
+            <p class="lead">A tiny preview of choosing your handwriting and ink.</p>
+            <div class="demo">
+                <div>
+                    <label for="txt">Your entry</label>
+                    <textarea id="txt">You stole the last dumpling and I let you.</textarea>
+                    <div class="row">
+                        <div><label for="fnt">Handwriting</label><select id="fnt"><option value="Caveat">Caveat</option><option value="Segoe Script, cursive">Script</option><option value="Georgia, serif">Typewriter-ish serif</option></select></div>
+                        <div><label id="inkl">Ink</label><div class="swatches" role="group" aria-labelledby="inkl" id="ink"></div></div>
+                    </div>
+                </div>
+                <div class="preview" id="pv" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Start in three steps</h2>
+            <ol class="steps" style="margin-top:28px">
+                <li><h3>Create your diary</h3><p>Sign in and name your book. It's yours in seconds.</p></li>
+                <li><h3>Invite your person</h3><p>Send a private link so you can both write.</p></li>
+                <li><h3>Write your story</h3><p>Add pages, photos and music. Keep it forever.</p></li>
+            </ol>
+        </section>
+
+        <section>
+            <blockquote>"It feels like the love letters my grandparents kept, except it plays our song."<cite>Maya &amp; Tom</cite></blockquote>
+            <blockquote>"We write one line each night. Reading back together is the best part of our week."<cite>Priya &amp; Sam</cite></blockquote>
+        </section>
+
+        <section id="faq">
+            <h2>Questions</h2>
+            <details><summary>Can we both write in the same diary?</summary><p>Yes. One of you creates it, then invites the other with a one-time link. You both add and edit pages.</p></details>
+            <details><summary>Is our diary private?</summary><p>Only the two of you can edit. Anyone with the link can read, and you control the link.</p></details>
+            <details><summary>Do I need to install anything?</summary><p>No. It runs in any modern browser.</p></details>
+        </section>
+
+        <section class="end" id="end">
+            <h2>Begin your story tonight</h2>
+            <p class="lead" style="margin:0 auto 24px">The best memories deserve more than a camera roll.</p>
+            <button class="btn" id="go">Create your diary</button>
+        </section>
+        <footer><span>With Cherry · a diary for two</span><span>A design study, not the real service.</span></footer>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+
+    <script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+// theme
+var root=document.documentElement,tb=$('#theme');
+function dark(){return root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches}
+function lbl(){tb.textContent=dark()?'Light':'Dark'}
+tb.onclick=function(){root.dataset.theme=dark()?'light':'dark';lbl()};lbl();
+// book content
+function art(a,b,c){return '<div class="photo" style="background:linear-gradient(180deg,'+a+' 0%,'+b+' 60%,'+c+' 100%)"><svg viewBox="0 0 100 60" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><circle cx="72" cy="20" r="9" fill="#fff" opacity=".8"/><path d="M0 46 Q25 34 50 44 T100 40 V60 H0Z" fill="rgba(42,40,80,.35)"/></svg></div>'}
+var leaves=[
+ {f:'<div class="face front cover"><span>our story</span><h3>Mia &amp; Theo</h3><span>❦</span></div>',
+  b:'<div class="face back" style="align-items:center;justify-content:center;text-align:center"><span>This little book belongs to</span><h3>Mia &amp; Theo</h3><span>Every page, a memory we made together.</span></div>'},
+ {f:'<div class="face front"><time>Thursday, 4 May 2023</time><h3>The night we met</h3><p>You spilled my coffee and apologised for ten whole minutes. I let you, just to keep you talking. By the time the barista called my name we had agreed on dinner and argued about the best film ever made. I walked home the long way, grinning at nothing.</p><p>— Mia</p><div class="pg">1</div></div>',
+  b:'<div class="face back">'+art('#f4c6d6','#c9a6e6','#5a4a9a')+'<div class="pg">2</div></div>'},
+ {f:'<div class="face front"><time>Sunday, 30 June 2024</time><h3>Somewhere by the sea</h3><p>We drove down with the windows open and no plan beyond finding the water. You lined smooth stones along the dashboard; I collected the way you laughed when a wave caught us. On the way home you fell asleep on my shoulder and I didn\'t move a muscle.</p><p>— Theo</p><div class="pg">3</div></div>',
+  b:'<div class="face back">'+art('#bfe3f2','#f6c9a8','#3b5f86')+'<div class="pg">4</div></div>'},
+ {f:'<div class="face front"><time>Friday, 14 February 2025</time><h3>You asked, I cried</h3><p>Your hands were shaking and you forgot half the speech, and the ring nearly rolled into the candle. We both lunged and knocked our heads together. It was clumsy and entirely us, and the most certain yes I have ever said.</p><p>— Mia</p><div class="pg">5</div></div>',
+  b:'<div class="face back" style="align-items:center;justify-content:center;text-align:center"><h3>To be continued</h3><span>❦ ❦ ❦</span><div class="pg">6</div></div>'}
+];
+var bk=$('#bk'),n=leaves.length,cur=0,els=[];
+leaves.forEach(function(l,i){var d=document.createElement('div');d.className='leaf';d.innerHTML=l.f+l.b;bk.appendChild(d);els.push(d)});
+function render(){
+ els.forEach(function(e,i){var f=i<cur;e.classList.toggle('flip',f);e.style.zIndex=f?i:n-i});
+ bk.classList.toggle('closed',cur===0);bk.classList.toggle('ended',cur===n);
+ $('#pos').textContent=cur===0?'Cover':cur===n?'The end':'Spread '+cur+' of '+(n-1);
+}
+function go(d){cur=Math.max(0,Math.min(n,cur+d));render()}
+$('#next').onclick=function(){go(1)};$('#prev').onclick=function(){go(-1)};
+bk.onclick=function(e){var r=bk.getBoundingClientRect();go(e.clientX<r.left+r.width/2&&cur>0?-1:1)};
+bk.onkeydown=function(e){if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)};
+document.addEventListener('keydown',function(e){if(e.target===document.body){if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)}});
+render();
+// soft music: slow arpeggio via WebAudio
+var ac,timer,on=false,notes=[261.6,329.6,392,523.3,392,329.6,293.7,349.2,440,523.3,440,349.2],k=0,sb=$('#snd');
+function tone(f){var o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,ac.currentTime);g.gain.linearRampToValueAtTime(.08,ac.currentTime+.05);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+1.6);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+1.7)}
+sb.onclick=function(){
+ try{
+  if(!on){ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume();timer=setInterval(function(){tone(notes[k++%notes.length])},650);on=true}
+  else{clearInterval(timer);on=false}
+ }catch(e){toast('Audio is not available in this browser.');return}
+ sb.setAttribute('aria-pressed',on);sb.textContent=on?'Pause our song':'Play our song';
+};
+// handwriting demo
+var inks=['#2a2850','#bf3f69','#1f6f8b','#3f7d4e'],ib=$('#ink'),ic=inks[0];
+inks.forEach(function(c,i){var b=document.createElement('button');b.style.background=c;b.setAttribute('aria-label','Ink '+(i+1));b.setAttribute('aria-pressed',i===0);b.onclick=function(){ic=c;[].forEach.call(ib.children,function(x){x.setAttribute('aria-pressed',x===b)});up()};ib.appendChild(b)});
+function up(){var p=$('#pv');p.textContent=$('#txt').value;p.style.fontFamily=$('#fnt').value+',cursive';p.style.color=ic}
+$('#txt').oninput=up;$('#fnt').onchange=up;up();
+// cta
+var tt;function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on')},2600)}
+$('#go').onclick=function(){toast('This is a design study, so there is no sign-up.')};
+})();
+    </script>
+</body>
+</html>
